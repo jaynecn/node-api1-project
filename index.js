@@ -23,6 +23,7 @@ app.use(express.json())
 // }
 
 app.get('/api/users', getAllUsers)
+app.get('/api/users/:id', getUsersById)
 
 // POST request
 app.post('/api/users', createNewUser)
@@ -49,10 +50,23 @@ function getAllUsers(req, res) {
     .then(data => {
       console.log(data);
       res.json(data);
+      res.status(200).json(data);
+      res.status(201).json(data);
+      res.status(500).json({ error: "There was an error while saving the user to the database" });
     })
     .catch(error => {
       console.log(error);
-    })
+      res.status(500).json({ error: "The users information could not be retrieved." });
+      res.status(400).json({ errorMessage: "Please provide name and bio for the user." })
+    });
+}
+
+function getUsersById(req, res) {
+  db.findById(req.params.id)
+  .then(data => {
+    console.log(data);
+    res.
+  })
 }
 
 // 8. listen on process.env.PORT || 3300
