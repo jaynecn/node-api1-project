@@ -4,7 +4,6 @@
 const express = require('express');
 const cors = require('cors');
 
-const port = 3300;
 
 // bringing in model so we can talk to the db
 const db = require('./data/db');
@@ -20,7 +19,30 @@ app.use(express.json())
 // GET request
 app.get('*', handleDefaultRequest)
 function handleDefaultRequest(req, res) {
-  res.json('hello world')
+  res.json('Hiya its Jayne how are you?')
 }
 
-app.listen(3300, () => console.log(`API listening on port ${port}`));
+// POST request
+app.post('/api/users', createNewUser)
+
+
+
+// FUNCTIONS
+
+function createNewUser(req, res) {
+  console.log(req);
+  db.insert(req.body)
+    .then(data => {
+      console.log(data);
+      res.json(data);
+    })
+    .catch(error => {
+      console.log(error);
+      res.json(error);
+    })
+}
+
+// 8. listen on process.env.PORT || 3300
+app.listen(process.env.PORT || 3300, () => {
+  console.log('listening on the server with Jayne ' + (process.env.PORT || 3300));
+})
