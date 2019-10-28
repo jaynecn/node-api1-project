@@ -17,10 +17,12 @@ app.use(express.json())
 
 // 7. create a 'catch all' endpoint
 // GET request
-app.get('*', handleDefaultRequest)
-function handleDefaultRequest(req, res) {
-  res.json('Hiya its Jayne how are you?')
-}
+// app.get('*', handleDefaultRequest)
+// function handleDefaultRequest(req, res) {
+//   res.json('Hiya its Jayne how are you?')
+// }
+
+app.get('/api/users', getAllUsers)
 
 // POST request
 app.post('/api/users', createNewUser)
@@ -39,6 +41,17 @@ function createNewUser(req, res) {
     .catch(error => {
       console.log(error);
       res.json(error);
+    })
+}
+
+function getAllUsers(req, res) {
+  db.find()
+    .then(data => {
+      console.log(data);
+      res.json(data);
+    })
+    .catch(error => {
+      console.log(error);
     })
 }
 
