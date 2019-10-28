@@ -38,10 +38,12 @@ function createNewUser(req, res) {
     .then(data => {
       console.log(data);
       res.json(data);
+      res.status(201)
     })
     .catch(error => {
       console.log(error);
       res.json(error);
+      res.status(500).json({ error: "There was an error while saving the user to the database" })
     })
 }
 
@@ -52,7 +54,6 @@ function getAllUsers(req, res) {
       res.json(data);
       res.status(200).json(data);
       res.status(201).json(data);
-      res.status(500).json({ error: "There was an error while saving the user to the database" });
     })
     .catch(error => {
       console.log(error);
